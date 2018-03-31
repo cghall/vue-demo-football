@@ -11,7 +11,7 @@
 		<div id="tab-content">
 			<div id="fixtures" v-show="isActive('fixtures')">
 				<div v-for="date in dates">
-					<h3>{{date}}</h3>
+					<h4>{{date | moment}}</h4>
 					<FixtureList :fixtures="fixturesByDate[date]"/>
 				</div>
 			</div>
@@ -30,6 +30,7 @@ import FixtureList from './FixtureList.vue'
 
 import axios from 'axios'
 import lodash from 'lodash';
+import moment from 'moment';
 
 export default {
 	components: {
@@ -68,6 +69,11 @@ export default {
 		},
 		isActive (v) {
 			return this.active === v
+		}
+	},
+	filters: {
+		moment(date){
+			return moment(date).format('dddd MMMM Do YYYY')
 		}
 	}
 }
