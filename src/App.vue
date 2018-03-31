@@ -1,16 +1,18 @@
 <template>
   <div id="app">
-      <router-view></router-view>
+      <PageLayout>
+        <router-view></router-view>
+      </PageLayout>      
   </div>
 </template>
 
 <script>
-import Competition from './components/Competition.vue'
+import PageLayout from './PageLayout.vue'
 
 export default {
   name: 'app',
   components: {
-    Competition
+    PageLayout
   }
 }
 </script>
@@ -22,6 +24,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 45px;
 }
 </style>
