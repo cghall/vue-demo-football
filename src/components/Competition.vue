@@ -4,14 +4,22 @@
 		<h1> {{competition.caption}} </h1>
 
 		<div id="tab-selector">
-			<a href="#">Fixtures</a>
-			<a href="#">Table</a>
+			<a href="#" class="tab-nav" v-on:click="setActiveTab('fixtures')">Fixtures</a>
+			<a href="#" class="tab-nav" v-on:click="setActiveTab('standings')">Standings</a>
 		</div>
 
-		<div v-for="date in dates">
-			<h3>{{date}}</h3>
-			<FixtureList :fixtures="fixturesByDate[date]"/>
+		<div id="tab-content">
+			<div id="fixtures" v-show="isActive('fixtures')">
+				<div v-for="date in dates">
+					<h3>{{date}}</h3>
+					<FixtureList :fixtures="fixturesByDate[date]"/>
+				</div>
+			</div>
+			<div id="standings" v-show="isActive('standings')">
+				{{leagueTable}}
+			</div>
 		</div>
+		
 	</div>
 
 </template>
@@ -30,6 +38,7 @@ export default {
 	data (){
 		return {
 			id: '',
+			active: 'fixtures',
 			fixtures: [ ],
 			leagueTable: { },
 			competition: { },
@@ -52,10 +61,23 @@ export default {
     	axios.get('https://api.football-data.org/v1/competitions/' + this.id + '/leagueTable', {headers: {'X-Auth-Token': 'b2a53e861bfc49bc9523cf86ced68c0a' }}).then(response => {
 	      		this.leagueTable = response.data
     	})
-    	
-    	
+	},
+	methods: {
+		setActiveTab (v) {
+			this.active = v
+		},
+		isActive (v) {
+			return this.active === v
+		}
 	}
 }
 
 </script>
 
+<style scoped>
+
+.tab-nav {
+	margin-left: 10px;
+}
+
+</style>
